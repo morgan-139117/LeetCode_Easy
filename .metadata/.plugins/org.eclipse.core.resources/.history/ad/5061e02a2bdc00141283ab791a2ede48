@@ -1,0 +1,40 @@
+package easy;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PascalTriangleII {
+
+	public List<Integer> upperRow;
+	public List<Integer> bottomRow;
+
+	public List<Integer> fillrow(List<Integer> upperR, int level){
+		
+		List<Integer> temp = new ArrayList<Integer>();
+		
+		if (rowIndex == 0) {
+			temp.add(1);
+			return temp;
+		}
+		
+		else {
+			
+			temp.add(1);
+			
+			for()
+				
+				
+				temp.add(1);
+		}
+
+		return temp;
+	}
+	
+	public List<Integer> getRow(int rowIndex) {
+		List<Integer> row;
+		for(int i = 0; i < rowIndex; i++){
+			row = fillrow(row,rowIndex);
+		}
+		return row;
+	}
+}
