@@ -6,7 +6,7 @@ public class ReadOff {
 
 		char[] temp = new char[sec.length * 2];
 		int j = 0;
-		for (int i = 0;i < sec.length && sec[i] != ' '; i++) {
+		for (int i = 0;i < sec.length && sec[i] != '\0'; i++) {
 			if (sec[i] == '2') {// char equation test mush use ''
 				temp[j++] = '1';
 				temp[j++] = '2';
@@ -46,9 +46,9 @@ public class ReadOff {
 		char[] sec = { '1' };
 		for (int i = 0; i < n; i++) {
 			sec = readoff(sec);
-			for (int j = 0 ; j < sec.length && sec[j] !='\0'; j++)
-				System.out.print("  "+ sec[j] + ",");
-			System.out.println();
+			//for (int j = 0 ; j < sec.length && sec[j] !='\0'; j++)
+			//	System.out.print("  "+ sec[j] + ",");
+			//System.out.println();
 
 		}
 		return new String(sec);
@@ -57,7 +57,7 @@ public class ReadOff {
 	public static void main(String[] args) {
 
 		ReadOff rf = new ReadOff();
-		System.out.println(rf.countAndSay(25));
+		System.out.println(rf.countAndSay(18).toString());
 
 	}
 }
