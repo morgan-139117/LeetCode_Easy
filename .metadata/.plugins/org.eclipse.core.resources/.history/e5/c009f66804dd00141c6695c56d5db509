@@ -1,0 +1,46 @@
+package easy;
+
+public class ReadOff {
+
+	public char[] readoff(char[] sec) {
+
+		char[] temp = new char[sec.length * 2];
+		int j = 0;
+		for (int i = 0; i < sec.length; i++) {
+			if (sec[i] == 2) {
+				temp[j++] = '1';
+				temp[j++] = '2';
+			}
+			else if (sec[i] == 1){
+				if(sec[i+1] == 1){
+					temp[j++] = '2';
+					temp[j++] = '1';
+					i++;
+				}
+				else{
+					temp[j++] = '1';
+					temp[j++] = '1';
+				}
+			}
+		}
+		return temp;
+	}
+
+	public String countAndSay(int n) {
+
+		if (n == 0)
+			return new String("0");
+		if (n == 1)
+			return new String("1");
+		char[] sec = { '1' };
+		for (int i = 0; i < n; i++) {
+			sec = readoff(sec);
+
+		}
+		return sec.toString();
+	}
+
+	public static void main(String[] args) {
+
+	}
+}
