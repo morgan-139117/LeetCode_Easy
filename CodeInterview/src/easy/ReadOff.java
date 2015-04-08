@@ -5,37 +5,47 @@ public class ReadOff {
 	public StringBuilder readoff(StringBuilder sourceStrBuilder) {
 
 		StringBuilder tempStrBuilder = new StringBuilder();
-
-		for (int i = 0; i < sourceStrBuilder.length(); i++) {
-			// current char @ source is 2 which reads as 12
-			if (sourceStrBuilder.charAt(i) == '2') {
-				tempStrBuilder.append('1');
-				tempStrBuilder.append('2');
-			}
-			// current char @ source is 1
-			else {
-				// if the current 1 is the last one which should read as 11
-				if ((i + 1) == sourceStrBuilder.length()) {
+		
+		boolean changed = true;
+		int continued = 0;
+		
+		for (int i = 0; i < sourceStrBuilder.length(); i++) {			
+					
+			//a new char
+			if(changed == true)
+			{//current char is the last one
+				if(i+1 == sourceStrBuilder.length()){
 					tempStrBuilder.append('1');
-					tempStrBuilder.append('1');
-				} else {
-					// the next char @ source is 1, which should be interpreted
-					// as '11' which reads as 21
-					if (sourceStrBuilder.charAt(i + 1) == '1') {
-						tempStrBuilder.append('2');
-						tempStrBuilder.append('1');
-						i++;
-					} else {
-						tempStrBuilder.append('1');
-						tempStrBuilder.append('1');
-
-						tempStrBuilder.append('1');
-						tempStrBuilder.append('2');
-						i++;
+					tempStrBuilder.append(sourceStrBuilder.charAt(i));
+				}else{
+					if(sourceStrBuilder.charAt(i) == sourceStrBuilder.charAt(i+ 1)){
+						continued++;
+						changed = false;
+					}else{
+						tempStrBuilder.append(++continued);
+						tempStrBuilder.append(sourceStrBuilder.charAt(i));
+						changed = true;
+						continued = 0;
 					}
 				}
+			
+			}else{//a continued char
+				//current char is the last one
+				if(i+1 == sourceStrBuilder.length()){
+					tempStrBuilder.append(++continued);
+					tempStrBuilder.append(sourceStrBuilder.charAt(i));
+				}else{
+					if(sourceStrBuilder.charAt(i) == sourceStrBuilder.charAt(i+ 1)){
+						continued++;
+					}else{
+						tempStrBuilder.append(++continued);
+						tempStrBuilder.append(sourceStrBuilder.charAt(i));
+						continued =0 ;//forgot to reset it to zero after detect a non-continuous char
+						changed = false;//forgot to reset to false after detect a non-continuous char
+					}
+				}
+			
 			}
-
 		}
 		return tempStrBuilder;
 	}
@@ -50,10 +60,9 @@ public class ReadOff {
 		sequenceStrBuilder.append("1");
 		for (int i = 1; i < n; i++) {
 			sequenceStrBuilder=	readoff(sequenceStrBuilder);
-			// for (int j = 0 ; j < sec.length && sec[j] !='\0'; j++)
-			// System.out.print("  "+ sec[j] + ",");
-			// System.out.println();
-
+			 for (int j = 0 ; j < sequenceStrBuilder.length() ; j++)
+			   System.out.print("  "+ sequenceStrBuilder.charAt(j) + ",");
+			   System.out.println();
 		}
 		return sequenceStrBuilder.toString();
 	}
@@ -61,7 +70,7 @@ public class ReadOff {
 	public static void main(String[] args) {
 
 		ReadOff rf = new ReadOff();
-		System.out.println(rf.countAndSay(25).toString());
+		System.out.println(rf.countAndSay(10).toString());
 
 	}
 }
