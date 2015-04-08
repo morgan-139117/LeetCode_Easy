@@ -2,39 +2,42 @@ package easy;
 
 public class ReadOff {
 
-	public char[] readoff(char[] sec) {
+	public StringBuilder readoff(StringBuilder sourceStrBuilder) {
 
-		char[] temp = new char[sec.length * 2];
-		int j = 0;
-		for (int i = 0;i < sec.length && sec[i] != '\0'; i++) {
-			if (sec[i] == '2') {// char equation test mush use ''
-				temp[j++] = '1';
-				temp[j++] = '2';
-			} else if (sec[i] == '1') {
-				// if(sec[i+1] == 1){//be very careful with such operating Array out of
-				// bounds
+		StringBuilder tempStrBuilder = new StringBuilder();
 
-				if ((i + 1) < sec.length && sec[i + 1] != '\0') {//java char array empty equals to \0
-					//if (sec[i + 1] == 1) {// char equation test mush use ''
-					
-					if (sec[i + 1] == '1') {
-					temp[j++] = '2';
-						temp[j++] = '1';
+		for (int i = 0; i < sourceStrBuilder.length(); i++) {
+			// current char @ source is 2 which reads as 12
+			if (sourceStrBuilder.charAt(i) == '2') {
+				tempStrBuilder.append('1');
+				tempStrBuilder.append('2');
+			}
+			// current char @ source is 1
+			else {
+				// if the current 1 is the last one which should read as 11
+				if ((i + 1) == sourceStrBuilder.length()) {
+					tempStrBuilder.append('1');
+					tempStrBuilder.append('1');
+				} else {
+					// the next char @ source is 1, which should be interpreted
+					// as '11' which reads as 21
+					if (sourceStrBuilder.charAt(i + 1) == '1') {
+						tempStrBuilder.append('2');
+						tempStrBuilder.append('1');
 						i++;
 					} else {
-						temp[j++] = '1';
-						temp[j++] = '1';
-						temp[j++] = '1';
-						temp[j++] = '2';
+						tempStrBuilder.append('1');
+						tempStrBuilder.append('1');
+
+						tempStrBuilder.append('1');
+						tempStrBuilder.append('2');
 						i++;
 					}
-				} else {
-					temp[j++] = '1';
-					temp[j++] = '1';
 				}
 			}
+
 		}
-		return temp;
+		return tempStrBuilder;
 	}
 
 	public String countAndSay(int n) {
@@ -43,21 +46,22 @@ public class ReadOff {
 			return new String("0");
 		if (n == 1)
 			return new String("1");
-		char[] sec = { '1' };
-		for (int i = 0; i < n; i++) {
-			sec = readoff(sec);
-			//for (int j = 0 ; j < sec.length && sec[j] !='\0'; j++)
-			//	System.out.print("  "+ sec[j] + ",");
-			//System.out.println();
+		StringBuilder sequenceStrBuilder = new StringBuilder();
+		sequenceStrBuilder.append("1");
+		for (int i = 1; i < n; i++) {
+			sequenceStrBuilder=	readoff(sequenceStrBuilder);
+			// for (int j = 0 ; j < sec.length && sec[j] !='\0'; j++)
+			// System.out.print("  "+ sec[j] + ",");
+			// System.out.println();
 
 		}
-		return new String(sec);
+		return sequenceStrBuilder.toString();
 	}
 
 	public static void main(String[] args) {
 
 		ReadOff rf = new ReadOff();
-		System.out.println(rf.countAndSay(18).toString());
+		System.out.println(rf.countAndSay(25).toString());
 
 	}
 }
