@@ -2,52 +2,27 @@ package easy;
 
 public class ReadOff {
 
-	public StringBuilder readoff(StringBuilder sourceStrBuilder) {
+	public StringBuilder readoff(StringBuilder srcBuilder) {
 
-		StringBuilder tempStrBuilder = new StringBuilder();
+		StringBuilder tmpBuilder = new StringBuilder();
+		int cont = 1;
+		//int charTest = srcBuilder.charAt(0); second bug
+		char charTest = srcBuilder.charAt(0);
 		
-		boolean changed = true;
-		int continued = 0;
-		
-		for (int i = 0; i < sourceStrBuilder.length(); i++) {			
-					
-			//a new char
-			if(changed == true)
-			{//current char is the last one
-				if(i+1 == sourceStrBuilder.length()){
-					tempStrBuilder.append('1');
-					tempStrBuilder.append(sourceStrBuilder.charAt(i));
-				}else{
-					if(sourceStrBuilder.charAt(i) == sourceStrBuilder.charAt(i+ 1)){
-						continued++;
-						changed = false;
-					}else{
-						tempStrBuilder.append(++continued);
-						tempStrBuilder.append(sourceStrBuilder.charAt(i));
-						changed = true;
-						continued = 0;
-					}
-				}
-			
-			}else{//a continued char
-				//current char is the last one
-				if(i+1 == sourceStrBuilder.length()){
-					tempStrBuilder.append(++continued);
-					tempStrBuilder.append(sourceStrBuilder.charAt(i));
-				}else{
-					if(sourceStrBuilder.charAt(i) == sourceStrBuilder.charAt(i+ 1)){
-						continued++;
-					}else{
-						tempStrBuilder.append(++continued);
-						tempStrBuilder.append(sourceStrBuilder.charAt(i));
-						continued =0 ;//forgot to reset it to zero after detect a non-continuous char
-						changed = false;//forgot to reset to false after detect a non-continuous char
-					}
-				}
-			
+		for (int i = 1; i < srcBuilder.length(); i++) {
+
+			if (srcBuilder.charAt(i) == charTest)
+				cont++;
+			else {
+				tmpBuilder.append(cont).append(charTest);
+				cont = 1;
+				charTest = srcBuilder.charAt(i);
 			}
+			//tmpBuilder.append(cont).append((int)charTest); this was the first bug
 		}
-		return tempStrBuilder;
+		//tmpBuilder.append(cont).append((int)charTest); third mistake , takes it as granted convert to int which is exact opposite of what I need to do
+		tmpBuilder.append(cont).append(charTest);
+		return tmpBuilder;
 	}
 
 	public String countAndSay(int n) {
@@ -59,10 +34,10 @@ public class ReadOff {
 		StringBuilder sequenceStrBuilder = new StringBuilder();
 		sequenceStrBuilder.append("1");
 		for (int i = 1; i < n; i++) {
-			sequenceStrBuilder=	readoff(sequenceStrBuilder);
-			 for (int j = 0 ; j < sequenceStrBuilder.length() ; j++)
-			   System.out.print("  "+ sequenceStrBuilder.charAt(j) + ",");
-			   System.out.println();
+			sequenceStrBuilder = readoff(sequenceStrBuilder);
+			for (int j = 0; j < sequenceStrBuilder.length(); j++)
+				System.out.print("  " + sequenceStrBuilder.charAt(j) + ",");
+			System.out.println();
 		}
 		return sequenceStrBuilder.toString();
 	}
@@ -70,7 +45,7 @@ public class ReadOff {
 	public static void main(String[] args) {
 
 		ReadOff rf = new ReadOff();
-		System.out.println(rf.countAndSay(10).toString());
+		System.out.println(rf.countAndSay(6).toString());
 
 	}
 }
